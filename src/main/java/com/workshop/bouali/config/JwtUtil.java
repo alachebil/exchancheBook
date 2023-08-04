@@ -1,5 +1,6 @@
 package com.workshop.bouali.config;
 
+import com.workshop.bouali.User.UserP;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -42,6 +43,12 @@ public class JwtUtil {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails.getUsername());
     }
+
+//    public String generateToken(UserP userDetails) {
+//        Map<String, Object> claims = new HashMap<>();
+//        claims.put("Role" ,userDetails.getRole());
+//        return createToken(claims, userDetails.getEmail());
+//    }
 
     private String createToken(Map<String, Object> claims, String subject) {
 
