@@ -1,6 +1,7 @@
 package com.workshop.bouali.config;
 
 import ch.qos.logback.core.LayoutBase;
+import com.workshop.bouali.dao.UserDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +23,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @RequiredArgsConstructor
 public class JwtAthFilter extends OncePerRequestFilter {
 
-    private UserDetailsService userDetailsServices;
+    private UserDao userDao;
 
     private final JwtUtil jwtUtil;
 
@@ -39,7 +40,7 @@ public class JwtAthFilter extends OncePerRequestFilter {
         userEmail = "something";
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsServices.loadUserByUsername(userEmail);
+            UserDetails userDetails = userDao.findUserByEmail(userEmail);
             final boolean isTokenValid;
             if (jwtUtil.validateToken(jwtToken, userDetails)) {
 
