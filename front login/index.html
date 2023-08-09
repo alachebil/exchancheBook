@@ -22,9 +22,9 @@
 					<input type="password" id="password" class="login__input" placeholder="Password">
 				</div>
 				
-				<button onclick="getToken()" class="button login__submit">					
+				<button onclick="getToken(event)" class="button login__submit">					
 					
-					<span class="button__text">Log In Now</span>			
+					<span class="button__text">Log In Now</span>
 					
 					
 					<i class="button__icon fas fa-chevron-right"></i>
@@ -41,6 +41,7 @@
 			</form>
 			<div class="social-login">
 				<h3>log in via</h3>
+
 				
 				<div class="social-icons">
 					<a href="#" class="social-login__icon fab fa-instagram"></a>
@@ -63,7 +64,9 @@
 
 <script>
 	
-function getToken() {
+function getToken(event) {
+	event.preventDefault();
+
     console.log("ya9ra fih ");
 
 var loginUrl = "http://localhost:8081/api/login"
@@ -113,11 +116,11 @@ xhr.onload = function () {
 };
 xhr.send(data);
 
-return false; // Prevent default form submission
+// Prevent default form submission
 
 
 
-
+    
 
 
 // var sendObject = JSON.stringify({username: user, password: password});
