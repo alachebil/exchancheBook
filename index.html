@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - A Pen by Mohithpoojary</title>
+  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css'>
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="container">
+	<div class="screen">
+		<div class="screen__content">
+			<form class="login">
+				<div  class="login__field">
+					<i class="login__icon fas fa-user"></i>
+					<input type="text" class="login__input" id="username" placeholder="User name / Email">
+				</div>
+				<div  class="login__field">
+					<i class="login__icon fas fa-lock"></i>
+					<input type="password" id="password" class="login__input" placeholder="Password">
+				</div>
+				
+				<button onclick="getToken()" class="button login__submit">					
+					
+					<span class="button__text">Log In Now</span>			
+					
+					
+					<i class="button__icon fas fa-chevron-right"></i>
+					
+				</button>
+				
+			
+
+				
+				
+				
+				<!-- <div id="result"></div> -->
+				<!-- <script src="jwt-vanilla.js"></script>		 -->
+			</form>
+			<div class="social-login">
+				<h3>log in via</h3>
+				
+				<div class="social-icons">
+					<a href="#" class="social-login__icon fab fa-instagram"></a>
+					<a href="#" class="social-login__icon fab fa-facebook"></a>
+					<a href="#" class="social-login__icon fab fa-twitter"></a>
+				</div>
+			</div>
+		</div>
+		<div class="screen__background">
+			<span class="screen__background__shape screen__background__shape4"></span>
+			<span class="screen__background__shape screen__background__shape3"></span>		
+			<span class="screen__background__shape screen__background__shape2"></span>
+			<span class="screen__background__shape screen__background__shape1"></span>
+		</div>		
+	</div>
+</div>
+<!-- partial -->
+  
+</body>
+
+<script>
+	
+function getToken() {
+    console.log("ya9ra fih ");
+
+var loginUrl = "http://localhost:8081/api/login"
+var xhr = new XMLHttpRequest();
+var userElement = document.getElementById('username');
+var passwordElement = document.getElementById('password');
+console.log(userElement.value)
+console.log(passwordElement.value)
+
+var tokenElement = document.getElementById('token');
+var user = userElement.value;
+var password = passwordElement.value;
+
+//ajouté
+var data = new FormData();
+data.append('username', user);
+data.append('password', password);
+
+ 
+
+// xhr.open('POST', loginUrl, true);
+// xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+// xhr.addEventListener('load', function() {
+// var responseObject = JSON.parse(this.response);
+// console.log(responseObject);
+// if (responseObject.token) {
+// // tokenElement.innerHTML = responseObject.token;
+// console.log('9rahhh');
+// } else {
+// tokenElement.innerHTML = "No token received";
+// }
+// });
+
+
+//ajouté
+
+
+xhr.open('POST', loginUrl, true);
+xhr.onload = function () {
+	// bch nrodha token toul me8iir kelmet access token w refresh 
+    console.log(this.responseText);
+
+	var responseObject = JSON.parse(this.responseText);
+	//console.log(responseObject);
+
+	localStorage.setItem('token', responseObject.access_token);
+};
+xhr.send(data);
+
+
+
+
+
+
+// var sendObject = JSON.stringify({username: user, password: password});
+
+// console.log('going to send', sendObject);
+// xhr.send(sendObject)
+
+
+
+}
+
+</script>
+</html>
