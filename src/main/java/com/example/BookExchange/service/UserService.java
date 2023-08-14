@@ -12,4 +12,8 @@ public interface UserService {
     void addRoleToUser(String username, String roleName);
     UserP getUser(String username);
     List<UserP> getUsers();
+
+
+    public void deleteUser(Long userId) throws IllegalAccessException;
+    public void updateUser(Long userId, String name, String username,String password) throws IllegalAccessException;
 }

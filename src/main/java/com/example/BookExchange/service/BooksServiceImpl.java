@@ -47,6 +47,7 @@ public class BooksServiceImpl implements BooksService{
     }
 
     @Override
+    @Transactional
     public void updateBook(Long bookId, String name, String categorie, Long prix) throws IllegalAccessException {
 
 

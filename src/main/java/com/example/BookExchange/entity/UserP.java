@@ -6,8 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 @Entity
 
@@ -25,6 +24,24 @@ public class UserP {
     @ManyToMany(fetch =FetchType.EAGER)
     private Collection<Role> roles=new ArrayList<>();
 
+    @OneToMany(mappedBy="userP")
+    private List<Books> books;
+
     // getters and setters are not shown for brevity
 
+
+
+    public UserP(String name, String username, String password, ArrayList<Role> roles) {
+
+        this.name = Objects.requireNonNull(name);
+        this.username = Objects.requireNonNull(username);
+        this.password = this.encrypt(password);
+        this.roles = Objects.requireNonNull(roles);
+    }
+
+
+    String encrypt(String password) {
+        // encryption logic
+        return password;
+    }
 }

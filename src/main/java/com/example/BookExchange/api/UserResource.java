@@ -1,6 +1,8 @@
 package com.example.BookExchange.api;
 
+import com.example.BookExchange.entity.Mapper;
 import com.example.BookExchange.entity.Role;
+import com.example.BookExchange.entity.UserDTO;
 import com.example.BookExchange.entity.UserP;
 import com.example.BookExchange.service.UserService;
 import lombok.Data;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import static java.util.stream.Collectors.toList;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +42,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class UserResource {
 
     private final UserService userService;
+    private Mapper mapper;
 
     //chnya ResponseENTITY???
     @GetMapping("/users")
@@ -69,6 +73,29 @@ public class UserResource {
     }
 
 
+    @DeleteMapping(path = "/user/del/{userId}")
+    public void deleteStudent(@PathVariable("userId") Long userId ) throws IllegalAccessException {
+        userService.deleteUser(userId);
+    }
+
+    @PutMapping(path = "/user/update/{userId}")
+    public void updateStudent(@PathVariable("userId") Long userId,@RequestParam(required = false) String name,@RequestParam(required = false) String username,@RequestParam(required = false) String password ) throws IllegalAccessException {
+        userService.updateUser(userId,name,username,password);
+    }
+
+    ////////////////////////////////////////////////////////////
+
+//
+//    @GetMapping("/users")
+//    @ResponseBody
+////    @ResponseBody
+//    public List<UserDTO> getUsers() {
+//        return userService.getUsers()
+//                .stream()
+//                .map(mapper::toDto)
+//                .collect(toList());
+//    }
+
 
 
     @GetMapping("/token/refresh")
@@ -86,7 +113,7 @@ public class UserResource {
                         .withSubject(userP.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURI().toString())
-                        .withClaim("roles", userP.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
+                        .withClaim("roles", userP.getRoles().stream().map(Role::getName).collect(toList()))
                         .sign(algorithm);
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("access_token", access_token);
@@ -107,6 +134,9 @@ public class UserResource {
             throw new RuntimeException("Refresh token is missing");
         }
     }
+
+
+
 
 }
 

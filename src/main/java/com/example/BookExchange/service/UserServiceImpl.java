@@ -12,9 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+
 @Service
 @RequiredArgsConstructor
 @Transactional // mech mafhoumaa chnyaaa
@@ -65,6 +64,40 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<UserP> getUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public void deleteUser(Long userId) throws IllegalAccessException {
+        boolean exists = userRepository.existsById(userId);
+        if (!exists) {
+            throw new IllegalAccessException("user with id " + userId + " is not exist ");
+        } else
+            userRepository.deleteById(userId);
+        System.out.println("the student is deleted successfully");
+
+    }
+
+    @Override
+    @Transactional
+    public void updateUser(Long userId, String name, String username, String password) throws IllegalAccessException {
+
+        UserP user = userRepository.findById(userId).orElseThrow(() -> new IllegalAccessException("user with id " + userId + " is not exist "));
+        if (name != null && name.length() > 0 && !Objects.equals(user.getName(), name)) {
+            user.setName(name);
+        }
+
+
+        if (username != null && username.length() > 0 && !Objects.equals(user.getUsername(), username)) {
+            UserP userP = userRepository.findByUsername(username);
+            if (userP!=null) {
+                throw new IllegalAccessException("username is taken");
+            } else
+                user.setUsername(username);
+        }
+
+        if (password != null && password.length() > 0 && !Objects.equals(user.getPassword(), password)) {
+            user.setPassword(password);
+        }
     }
 
 
