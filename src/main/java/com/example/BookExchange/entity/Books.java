@@ -3,7 +3,6 @@ package com.example.BookExchange.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -27,7 +26,7 @@ public class Books {
     @ManyToOne
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private UserP userP;
+    private User user;
 
     public Books(String name, String categorie, String image, Long prix) {
         this.name = name;

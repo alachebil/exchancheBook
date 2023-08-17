@@ -77,6 +77,48 @@
 			<artifactId>jaxb-api</artifactId>
 		</dependency>
 
+		<!--mapper dependency-->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>2.4.4</version>
+		</dependency>
+<!--swagger dependency-->
+
+
+
+
+		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
+<!--		<dependency>-->
+<!--			<groupId>io.springfox</groupId>-->
+<!--			<artifactId>springfox-swagger-ui</artifactId>-->
+<!--			<version>3.0.0</version>-->
+<!--		</dependency>-->
+
+<!--		<dependency>-->
+<!--			<groupId>io.springfox</groupId>-->
+<!--			<artifactId>springfox-boot-starter</artifactId>-->
+<!--			<version>3.0.0</version>-->
+<!--		</dependency>-->
+
+<!--				<dependency>-->
+<!--					<groupId>io.swagger.core.v3</groupId>-->
+<!--					<artifactId>swagger-annotations</artifactId>-->
+<!--					<version>2.2.15</version>-->
+<!--				</dependency>-->
+
+
+
+
+<!--		denpendency of twilio et sms -->
+
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio</artifactId>
+			<version>7.16.1</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

@@ -1,17 +1,22 @@
 package com.example.BookExchange.service;
 
 import com.example.BookExchange.dto.UserDTO;
+import com.example.BookExchange.dto.UserDtoCreation;
 import com.example.BookExchange.entity.Role;
-import com.example.BookExchange.entity.UserP;
+import com.example.BookExchange.entity.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    UserP saveUser(UserP userP);
+//    UserP saveUser(UserP userP);
+    User saveUser(UserDtoCreation userDtoCreation);
+
+
+
     Role saveRole (Role role);
     void addRoleToUser(String username, String roleName);
-    UserP getUser(String username);
+    User getUser(String username);
     List<UserDTO> getUsers();
 
 

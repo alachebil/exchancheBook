@@ -8,12 +8,13 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.*;
 
-@Entity
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserP {
+@Entity
+@Table(name = "UserP")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,19 +26,20 @@ public class UserP {
     @ManyToMany(fetch =FetchType.EAGER)
     private Collection<Role> roles=new ArrayList<>();
 
-    @OneToMany(mappedBy="userP")
+    @OneToMany(mappedBy="user")
     private List<Books> books;
 
     // getters and setters are not shown for brevity
 
 
 
-    public UserP(String name, String username, String password, ArrayList<Role> roles) {
+    public User(String name, String username, String password, Long tel, ArrayList<Role> roles) {
 
         this.name = Objects.requireNonNull(name);
         this.username = Objects.requireNonNull(username);
         this.password = this.encrypt(password);
         this.roles = Objects.requireNonNull(roles);
+        this.tel=tel;
     }
 
 

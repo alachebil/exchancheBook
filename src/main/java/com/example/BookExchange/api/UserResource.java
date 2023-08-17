@@ -1,9 +1,11 @@
 package com.example.BookExchange.api;
 
 import com.example.BookExchange.dto.UserDTO;
+import com.example.BookExchange.dto.UserDtoCreation;
 import com.example.BookExchange.entity.Role;
-import com.example.BookExchange.entity.UserP;
+import com.example.BookExchange.entity.User;
 import com.example.BookExchange.service.UserService;
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+//@Api(value ="User" ,protocols = "http")
 public class UserResource {
 
     private final UserService userService;
@@ -50,11 +53,17 @@ public class UserResource {
 //    }
 
 
+//    @PostMapping("/user/save")
+//    public ResponseEntity<UserP> saveUser(@RequestBody UserP userP) {
+//        // chnya el uri eli zedha
+//        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
+//        return ResponseEntity.created(uri).body(userService.saveUser(userP));
+//    }
     @PostMapping("/user/save")
-    public ResponseEntity<UserP> saveUser(@RequestBody UserP userP) {
+    public ResponseEntity<User> saveUser(@RequestBody UserDtoCreation userDtoCreation) {
         // chnya el uri eli zedha
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
-        return ResponseEntity.created(uri).body(userService.saveUser(userP));
+        return ResponseEntity.created(uri).body(userService.saveUser(userDtoCreation));
     }
 
     @PostMapping("/role/save")
@@ -72,12 +81,12 @@ public class UserResource {
 
 
     @DeleteMapping(path = "/user/del/{userId}")
-    public void deleteStudent(@PathVariable("userId") Long userId ) throws IllegalAccessException {
+    public void deleteUser(@PathVariable("userId") Long userId ) throws IllegalAccessException {
         userService.deleteUser(userId);
     }
 
     @PutMapping(path = "/user/update/{userId}")
-    public void updateStudent(@PathVariable("userId") Long userId,@RequestParam(required = false) String name,@RequestParam(required = false) String username,@RequestParam(required = false) String password ) throws IllegalAccessException {
+    public void updateUser(@PathVariable("userId") Long userId,@RequestParam(required = false) String name,@RequestParam(required = false) String username,@RequestParam(required = false) String password ) throws IllegalAccessException {
         userService.updateUser(userId,name,username,password);
     }
 
@@ -103,12 +112,12 @@ public class UserResource {
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
                 String username = decodedJWT.getSubject();
-                UserP userP = userService.getUser(username);
+                User user = userService.getUser(username);
                 String access_token = JWT.create()
-                        .withSubject(userP.getUsername())
+                        .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURI().toString())
-                        .withClaim("roles", userP.getRoles().stream().map(Role::getName).collect(toList()))
+                        .withClaim("roles", user.getRoles().stream().map(Role::getName).collect(toList()))
                         .sign(algorithm);
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("access_token", access_token);

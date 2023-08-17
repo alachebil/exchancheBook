@@ -1,9 +1,7 @@
 package com.example.BookExchange.api;
 
 import com.example.BookExchange.dto.BooksDto;
-import com.example.BookExchange.dto.UserDTO;
 import com.example.BookExchange.entity.Books;
-import com.example.BookExchange.entity.UserP;
 import com.example.BookExchange.service.BooksService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,8 +1,10 @@
 package com.example.BookExchange.security;
 
+import com.example.BookExchange.dto.UserDtoMapper;
 import com.example.BookExchange.filter.CustomAuthenticationFilter;
 import com.example.BookExchange.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -47,9 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/api/login/**", "/api/token/refresh/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/login/**", "/api/token/refresh/**","/api/user/save/**","/swagger-ui/**",
+                "/swagger-ui.html").permitAll();
         http.authorizeRequests().antMatchers(GET, "/api/user/**").hasAuthority("ROLE_USER");
-        http.authorizeRequests().antMatchers(POST, "/api/user/save/**").hasAuthority("ROLE_ADMIN");
+//        http.authorizeRequests().antMatchers(POST, "/api/user/save/**").hasAuthority("ROLE_ADMIN");
         http.authorizeRequests().anyRequest().permitAll();
         http.addFilter(customAuthenticationFilter);
        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -77,8 +80,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
+    private static final String[] AUTH_WHITELIST ={
+            "/api/login/**",
+            "http://localhost:8081/api/users",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
 
-
+    };
 
 
 
