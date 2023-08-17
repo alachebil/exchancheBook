@@ -29,6 +29,10 @@ public class Books {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private UserP userP;
 
-
-
+    public Books(String name, String categorie, String image, Long prix) {
+        this.name = name;
+        this.categorie = categorie;
+        this.image = image;
+        this.prix = prix;
+    }
 }

@@ -20,6 +20,7 @@ public class UserP {
     private Long id;
     private String name;
     private String username;
+    private Long tel;
     private String password;
     @ManyToMany(fetch =FetchType.EAGER)
     private Collection<Role> roles=new ArrayList<>();

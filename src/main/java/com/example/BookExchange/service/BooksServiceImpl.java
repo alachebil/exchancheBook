@@ -1,15 +1,15 @@
 package com.example.BookExchange.service;
 
+import com.example.BookExchange.dto.BooksDto;
+import com.example.BookExchange.dto.BooksDtoMapper;
 import com.example.BookExchange.entity.Books;
-import com.example.BookExchange.entity.UserP;
 import com.example.BookExchange.repository.BooksRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +17,7 @@ import java.util.Optional;
 public class BooksServiceImpl implements BooksService{
 
     private final BooksRepository booksRepository;
+    private final BooksDtoMapper booksDtoMapper;
 
     @Override
     public Books addBook(Books books) {
@@ -29,8 +30,10 @@ public class BooksServiceImpl implements BooksService{
     }
 
     @Override
-    public List<Books> getBooks() {
-        return booksRepository.findAll();
+    public List<BooksDto> getBooks() {
+        return booksRepository.findAll().stream()
+                .map(booksDtoMapper)
+                .collect(Collectors.toList());
     }
 
     @Override

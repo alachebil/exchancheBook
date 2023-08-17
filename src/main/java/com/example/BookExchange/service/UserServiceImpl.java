@@ -1,5 +1,7 @@
 package com.example.BookExchange.service;
 
+import com.example.BookExchange.dto.UserDTO;
+import com.example.BookExchange.dto.UserDtoMapper;
 import com.example.BookExchange.entity.Role;
 import com.example.BookExchange.entity.UserP;
 import com.example.BookExchange.repository.RoleRepository;
@@ -13,14 +15,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional // mech mafhoumaa chnyaaa
 public class UserServiceImpl implements UserService, UserDetailsService {
+
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserDtoMapper userDtoMapper;
 
 
     @Override
@@ -41,6 +47,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
       //  log.info("saving user");
         userP.setPassword(passwordEncoder.encode(userP.getPassword()));
         return userRepository.save(userP);
+
     }
 
     @Override
@@ -61,9 +68,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
+
     @Override
-    public List<UserP> getUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(userDtoMapper)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -73,7 +84,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new IllegalAccessException("user with id " + userId + " is not exist ");
         } else
             userRepository.deleteById(userId);
-        System.out.println("the student is deleted successfully");
+        System.out.println("the user is deleted successfully");
 
     }
 

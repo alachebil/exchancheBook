@@ -1,8 +1,7 @@
 package com.example.BookExchange.api;
 
-import com.example.BookExchange.entity.Mapper;
+import com.example.BookExchange.dto.UserDTO;
 import com.example.BookExchange.entity.Role;
-import com.example.BookExchange.entity.UserDTO;
 import com.example.BookExchange.entity.UserP;
 import com.example.BookExchange.service.UserService;
 import lombok.Data;
@@ -29,7 +28,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 import static org.springframework.http.HttpStatus.FORBIDDEN;
@@ -42,14 +40,14 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class UserResource {
 
     private final UserService userService;
-    private Mapper mapper;
+
 
     //chnya ResponseENTITY???
-    @GetMapping("/users")
-    public ResponseEntity<List<UserP>> getUsers() {
-
-        return ResponseEntity.ok().body(userService.getUsers());
-    }
+//    @GetMapping("/users")
+//    public ResponseEntity<List<UserP>> getUsers() {
+//
+//        return ResponseEntity.ok().body(userService.getUsers());
+//    }
 
 
     @PostMapping("/user/save")
@@ -85,16 +83,13 @@ public class UserResource {
 
     ////////////////////////////////////////////////////////////
 
-//
-//    @GetMapping("/users")
-//    @ResponseBody
-////    @ResponseBody
-//    public List<UserDTO> getUsers() {
-//        return userService.getUsers()
-//                .stream()
-//                .map(mapper::toDto)
-//                .collect(toList());
-//    }
+
+    @GetMapping("/users")
+
+    public List<UserDTO> getUsers() {
+        return userService.getUsers();
+
+    }
 
 
 
@@ -134,9 +129,6 @@ public class UserResource {
             throw new RuntimeException("Refresh token is missing");
         }
     }
-
-
-
 
 }
 

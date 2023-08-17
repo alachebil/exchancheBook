@@ -1,5 +1,6 @@
 package com.example.BookExchange.service;
 
+import com.example.BookExchange.dto.UserDTO;
 import com.example.BookExchange.entity.Role;
 import com.example.BookExchange.entity.UserP;
 
@@ -11,7 +12,7 @@ public interface UserService {
     Role saveRole (Role role);
     void addRoleToUser(String username, String roleName);
     UserP getUser(String username);
-    List<UserP> getUsers();
+    List<UserDTO> getUsers();
 
 
     public void deleteUser(Long userId) throws IllegalAccessException;
