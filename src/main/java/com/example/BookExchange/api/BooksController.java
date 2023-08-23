@@ -43,8 +43,8 @@ public class BooksController {
     }
 
     @PutMapping(path = "{bookId}")
-    public void updateBook(@PathVariable("bookId") Long bookId,@RequestParam(required = false) String name,@RequestParam(required = false) String categorie,@RequestParam(required = false) Long prix ) throws IllegalAccessException {
-        booksService.updateBook(bookId,name,categorie,prix);
+    public void updateBook(@PathVariable("bookId") Long bookId,@RequestParam(required = false) String name,@RequestParam(required = false) String categorie,@RequestParam(required = false) Double price ) throws IllegalAccessException {
+        booksService.updateBook(bookId,name,categorie,price);
     }
 
 

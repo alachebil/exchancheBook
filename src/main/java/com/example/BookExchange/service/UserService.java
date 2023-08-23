@@ -18,8 +18,6 @@ public interface UserService {
     void addRoleToUser(String username, String roleName);
     User getUser(String username);
     List<UserDTO> getUsers();
-
-
     public void deleteUser(Long userId) throws IllegalAccessException;
     public void updateUser(Long userId, String name, String username,String password) throws IllegalAccessException;
 }

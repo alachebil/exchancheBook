@@ -51,7 +51,7 @@ public class BooksServiceImpl implements BooksService{
 
     @Override
     @Transactional
-    public void updateBook(Long bookId, String name, String categorie, Long prix) throws IllegalAccessException {
+    public void updateBook(Long bookId, String name, String categorie, Double prix) throws IllegalAccessException {
 
 
         Books books = booksRepository.findById(bookId).orElseThrow(() -> new IllegalAccessException("book with id " + bookId + " is not exist "));
@@ -61,11 +61,11 @@ public class BooksServiceImpl implements BooksService{
 
         if (categorie != null && categorie.length() > 0) {
 
-            books.setCategorie(categorie);
+            books.setCategory(categorie);
         }
         if (prix != null ) {
 
-            books.setPrix(prix);
+            books.setPrice(prix);
         }
 
 

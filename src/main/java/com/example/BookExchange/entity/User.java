@@ -21,6 +21,7 @@ public class User {
     private Long id;
     private String name;
     private String username;
+    private String email;
     private Long tel;
     private String password;
     @ManyToMany(fetch =FetchType.EAGER)
@@ -33,13 +34,14 @@ public class User {
 
 
 
-    public User(String name, String username, String password, Long tel, ArrayList<Role> roles) {
+    public User(String name, String username, String password, Long tel,String email, ArrayList<Role> roles) {
 
         this.name = Objects.requireNonNull(name);
         this.username = Objects.requireNonNull(username);
         this.password = this.encrypt(password);
         this.roles = Objects.requireNonNull(roles);
         this.tel=tel;
+        this.email=email;
     }
 
 

@@ -12,7 +12,7 @@ public interface BooksService {
     Books getBook(String name);
     List<BooksDto> getBooks();
     public void deleteBook(Long bookId) throws IllegalAccessException;
-    public void updateBook(Long bookId, String name, String categorie,Long prix) throws IllegalAccessException;
+    public void updateBook(Long bookId, String name, String categorie,Double prix) throws IllegalAccessException;
 
 
 }

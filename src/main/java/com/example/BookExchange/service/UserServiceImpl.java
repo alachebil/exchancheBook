@@ -7,17 +7,21 @@ import com.example.BookExchange.entity.Role;
 import com.example.BookExchange.entity.User;
 import com.example.BookExchange.repository.RoleRepository;
 import com.example.BookExchange.repository.UserRepository;
+import com.example.BookExchange.service.email.EmailSender;
+import com.example.BookExchange.service.email.EmailValidator;
 import com.twilio.Twilio;
 
 import com.twilio.rest.api.v2010.account.Message;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -38,6 +42,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserDtoMapper userDtoMapper;
+
+    private final EmailValidator emailValidator;
+    private final EmailSender emailSender;
+
+//
+//    @Value("${baeldung.presentation}")
+//    private String baeldungPresentation;
 
 
     @Override
@@ -63,14 +74,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 //
 //    }
 
+
     @Override
     public User saveUser(UserDtoCreation userDtoCreation) {
         //  log.info("saving user");
         User Userexists = userRepository.findByUsername(userDtoCreation.getUsername());
         if (Userexists != null) {
             throw new IllegalStateException("username is already taken.");
-        } else {
+        }
+
+        boolean isValidEmail = emailValidator.test(userDtoCreation.getEmail());
+
+        if (!isValidEmail) {
+
+            throw new IllegalStateException("email address is not valid.");
+        }
+
+        else {
             userDtoCreation.setPassword(passwordEncoder.encode(userDtoCreation.getPassword()));
+//            String link ="lien elii ihez lel login wala page bch tcomfirmi bih el email w baad temchi lel login ";
+//            emailSender.send(userDtoCreation.getEmail(), emailSender.buildEmail(userDtoCreation.getUsername(), link));
             User user = userDtoMapper.DTOToUser(userDtoCreation);
 
             /**************** lel ssmmsss ki tzid compte **********/
@@ -118,6 +141,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void deleteUser(Long userId) throws IllegalAccessException {
+        RestTemplate restTemplate = new RestTemplate();
+
         boolean exists = userRepository.existsById(userId);
         if (!exists) {
             throw new IllegalAccessException("user with id " + userId + " is not exist ");

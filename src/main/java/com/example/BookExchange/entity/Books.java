@@ -18,9 +18,9 @@ public class Books {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private String categorie;
+    private String category;
     private String image;
-    private Long prix;
+    private Double price;
     private boolean privacy;
 
     @ManyToOne
@@ -28,10 +28,10 @@ public class Books {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    public Books(String name, String categorie, String image, Long prix) {
+    public Books(String name, String category, String image, Double price) {
         this.name = name;
-        this.categorie = categorie;
+        this.category = category;
         this.image = image;
-        this.prix = prix;
+        this.price = price;
     }
 }

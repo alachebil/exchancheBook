@@ -1,5 +1,9 @@
 package com.example.BookExchange;
 
+import com.example.BookExchange.dto.UserDtoCreation;
+import com.example.BookExchange.entity.Books;
+import com.example.BookExchange.entity.Role;
+import com.example.BookExchange.entity.User;
 import com.example.BookExchange.service.UserService;
 
 
@@ -7,8 +11,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.ArrayList;
 /*import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -23,6 +32,7 @@ import springfox.documentation.spring.web.plugins.Docket;*/
 //				url="runcodenow")
 //		)
 //)
+@EnableScheduling
 public class BookExchangeApplication {
 
 	public static void main(String[] args) {
@@ -33,6 +43,12 @@ public class BookExchangeApplication {
 	PasswordEncoder passwordEncoder()
 	{
 		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	JavaMailSender javaMailSender()
+	{
+		return new JavaMailSenderImpl();
 	}
 
 
@@ -59,21 +75,23 @@ public class BookExchangeApplication {
 //			userService.saveRole(new Role(null, "ROLE_MANAGER"));
 //			userService.saveRole(new Role(null, "ROLE_ADMIN"));
 //			userService.saveRole(new Role(null, "ROLE_SUPER_ADMIN"));
-//
-//			booksService.addBook(new Books("name","categorie","image", 55L));
+
+			//booksService.addBook(new Books("name","categorie","image", 55L));
 
 
-//			userService.saveUser(new UserP(null,"ala chebil","chebilala","123456",new ArrayList<>()));
-//			userService.saveUser(new UserP("samer chebil","chebilsamer","0000",96212001L,new ArrayList<>()));
-			//userService.saveUser(new UserP("mootaz gay", "nabli", "123456", 303030L, new ArrayList<>()));
-//
+//  !!!!!!!!!!!!!!!   loula hya s7i7a bel dto  !!!!!!!!!!!
+			userService.saveUser(new UserDtoCreation("ala chebil","chebilraja","ala.chebil@esprit.com",96212001L,"0000"));
+//			userService.saveUser(new User("samer chebil","chebilsamer","0000",96212001L,"samer.chebil@esprit.com",new ArrayList<>()));
+//			userService.saveUser(new User("mootaz nabli", "nabli", "123456", 303030L, "motaz.chebil@esprit.com",new ArrayList<>()));
+
 //			userService.addRoleToUser("nabli","ROLE_USER");
-//			userService.addRoleToUser("chebilala","ROLE_ADMIN");
+			userService.addRoleToUser("chebilraja","ROLE_ADMIN");
 //			userService.addRoleToUser("chebilsamer","ROLE_MANAGER");
 //			userService.addRoleToUser("nabliTazz","ROLE_MANAGER");
-//
-//
-//
+
+
+
+
 		};
 	}
 

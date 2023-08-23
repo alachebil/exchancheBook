@@ -10,6 +10,6 @@ import java.util.function.Function;
 public class BooksDtoMapper implements Function<Books, BooksDto> {
     @Override
     public BooksDto apply(Books books) {
-        return new BooksDto(books.getName(),books.getCategorie(),books.getImage(),books.getPrix());
+        return new BooksDto(books.getName(),books.getCategory(),books.getImage(),books.getPrice());
     }
 }
